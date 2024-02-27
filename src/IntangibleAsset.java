@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class IntangibleAsset extends Asset{
     private String type; // Definite (eg. Legal Agreement) or Indefinite (eg. Brand name)
     private double duration; // in Years
@@ -6,7 +8,29 @@ public class IntangibleAsset extends Asset{
         // For the current year
         double markdown = calculateMarkdown();
         double netBookValue = getCost() - markdown;
-        System.out.println("Net Book Value for the Current Year: $" + netBookValue);
+        System.out.println("Net book value for the current year: $" + netBookValue);
+    }
+
+    @Override
+    public void displayDetails() {
+        super.displayDetails();
+        System.out.println("Intangible asset type: " + getType());
+        System.out.println("Intangible asset duration: " + getDuration() + "years");
+    }
+
+    @Override
+    public void editDetails() {
+        Scanner scanner = new Scanner(System.in);
+        super.editDetails();
+
+        System.out.println("Enter the updated type (definite or indefinite): ");
+        String updatedType = scanner.nextLine();
+        this.setType(updatedType);
+
+        System.out.println("Enter the updated duration (in years): ");
+        double updatedDuration = scanner.nextDouble();
+        scanner.nextLine(); //consumes the newline character in the buffer
+        this.setDuration(updatedDuration);
     }
 
     // Default Constructor

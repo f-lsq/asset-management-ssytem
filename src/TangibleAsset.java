@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class TangibleAsset extends Asset{
     private String dimension; // In meters (Length x Width x Height)
     private double weight; // In kilograms
@@ -7,7 +9,36 @@ public class TangibleAsset extends Asset{
         // For the current year
         double markdown = calculateMarkdown();
         double netBookValue = getCost() - markdown;
-        System.out.println("Net Book Value for the Current Year: $" + netBookValue);
+        System.out.println("Net book value for the current year: $" + netBookValue);
+    }
+
+    @Override
+    public void displayDetails() {
+        // Call displayDetails() method from Asset class (parent)
+        super.displayDetails();
+        System.out.println("Tangible asset dimension: " + getDimension() + "m");
+        System.out.println("Tangible asset weight: " + getWeight() + "kg");
+        System.out.println("Tangible asset color: " + getColor());
+    }
+
+    @Override
+    public void editDetails() {
+        // Call editDetails() method from Asset class (parent)
+        super.editDetails();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the updated dimension (in meters - L x W x H): " + getDimension());
+        String updatedDimension = scanner.nextLine();
+        this.setDimension(updatedDimension);
+
+        System.out.println("Enter the updated weight (in kilograms): " + getWeight());
+        double updatedWeight = scanner.nextDouble();
+        scanner.nextLine(); //consumes the newline character in the buffer
+        this.setWeight(updatedWeight);
+
+        System.out.println("Enter the new color: " + getColor());
+        String updatedColor = scanner.nextLine();
+        this.setColor(updatedColor);
     }
 
     // Default Constructor

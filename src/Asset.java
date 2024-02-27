@@ -1,14 +1,33 @@
-public class Asset {
+import java.util.Scanner;
+public abstract class Asset { // Asset class (abstract base class) cannot be instantiated
     private String name;
     private double cost; // Historical cost (At date of purchase)
     private String id;
 
-    protected double calculateMarkdown() {
-        // Depreciation / Amortization (Assume both means the same thing)
-        // Assume all assets uses straight-line method (no double-declining, etc)
-        // Assume use of historical cost
-        double markdownRate = 0.2; // per year
-        return cost * markdownRate;
+    public abstract double calculateMarkdown() {
+        /// ???
+    }
+
+    public void displayDetails() {
+        System.out.println("Asset name: " + getName());
+        System.out.println("Asset cost: " + getCost());
+        System.out.println("Asset id: " + getId());
+    }
+
+    public void editDetails() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the updated name: ");
+        String updatedName = scanner.nextLine();
+        this.setName(updatedName);
+
+        System.out.println("Enter the updated cost");
+        double updatedCost = scanner.nextDouble();
+        scanner.nextLine(); //consumes the newline character in the buffer
+        this.setCost(updatedCost);
+
+        System.out.println("Enter the updated id");
+        String updatedId = scanner.nextLine();
+        this.setId(updatedId);
     }
 
     // Default Constructor

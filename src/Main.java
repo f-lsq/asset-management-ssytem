@@ -1,5 +1,6 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class Main {
             if (choice == 1) {
                 addNewAsset();
             } if (choice == 2) {
-                // displayAssets();
+                displayAssets();
             }else if (choice == 3) {
                 break;
             }
@@ -54,9 +55,9 @@ public class Main {
             scanner.nextLine(); // consume the newline character remaining in the buffer
 
             if (choice == 1) {
-                System.out.println("Enter the dimension of the tangible asset: ");
+                System.out.println("Enter the dimension of the tangible asset (in meters - L x W x H): ");
                 String dimension = scanner.nextLine();
-                System.out.println("Enter the weight of the tangible asset: ");
+                System.out.println("Enter the weight of the tangible asset (in kilograms): ");
                 double weight = scanner.nextDouble();
                 scanner.nextLine(); // consume the newline character remaining in the buffer
                 System.out.println("Enter the color of the tangible asset: ");
@@ -67,9 +68,9 @@ public class Main {
                 System.out.println("Tangible asset added successfully");
                 break;
             } else if (choice == 2) {
-                System.out.println("Enter the type of the intangible asset: ");
+                System.out.println("Enter the type of the intangible asset (definite or indefinite): ");
                 String type = scanner.nextLine();
-                System.out.println("Enter the duration of the intangible asset: ");
+                System.out.println("Enter the duration of the intangible asset (in years): ");
                 double duration = scanner.nextDouble();
                 scanner.nextLine(); // consume the newline character remaining in the buffer
 
@@ -83,13 +84,47 @@ public class Main {
             }
         }
     private static void displayAssets() {
-        System.out.println("List of assets:");
-        for (Asset asset : assetList) {
-            System.out.println("Name: " + asset.getName());
-            System.out.println("Cost: " + asset.getCost());
-            System.out.println("Id: " + asset.getId());
-            System.out.println("----------------------");
+        for (int i = 0; i < assetList.size(); i++) {
+            Asset asset = assetList.get(i);
+            System.out.println("Asset #" + i);
+            asset.displayDetails();
+            System.out.println("------------------");
         }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Choose an option:");
+        System.out.println("1. Exit");
+        System.out.println("2. Edit a asset");
+        System.out.println("3. Delete a asset");
+        int option = scanner.nextInt();
+
+        if (option == 2) {
+            System.out.println("Enter the index of the asset you want to edit");
+            int index = scanner.nextInt();
+            scanner.nextLine(); //consumes the newline character in the buffer
+            if (index >= 0 && index < assetList.size()) {
+                Asset assetToUpdate = assetList.get(index);
+                editAsset(assetToUpdate);
+            } else {
+                System.out.println("Invalid Index.");
+            }
+        } else if (option == 3) {
+            System.out.println("Enter the index of the asset you want to delete: ");
+            int index = scanner.nextInt();
+            scanner.nextLine(); //consumes the newline character in the buffer
+            if (index >= 0 && index < assetList.size()) {
+                assetList.remove(index);
+                System.out.println("Asset deleted");
+            } else {
+                System.out.println("Invalid Index.");
+            }
+        }
+
+
+    }
+
+    public static void editAsset(Asset asset) {
+        asset.editDetails();
     }
 
 }
